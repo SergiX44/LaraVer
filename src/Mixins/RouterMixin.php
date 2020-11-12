@@ -31,10 +31,10 @@ class RouterMixin
                 $version = $attributes[RouteMixin::VERSION]; // if declare as attribute always win
             }
 
-            $oldPrefix = $this->getLastGroupPrefix();
+            $lastPrefix = $this->getLastGroupPrefix();
             if (isset(end($this->groupStack)[RouteMixin::VERSION])) { // if we are in an already versioned group
                 $lastGroup = array_pop($this->groupStack);
-                $lastGroup['prefix'] = Helpers::replaceVersion($lastGroup[RouteMixin::VERSION], $version, $oldPrefix);
+                $lastGroup['prefix'] = Helpers::replaceVersion($lastGroup[RouteMixin::VERSION], $version, $lastPrefix);
                 $this->groupStack[] = $lastGroup;
             } elseif (isset($attributes['prefix'])) { // if we are the first versioned group, and we have also a prefix
                 $attributes['prefix'] = "v{$version}/{$attributes['prefix']}";
@@ -46,7 +46,7 @@ class RouterMixin
 
             // restore the last group prefix
             $lastGroup = array_pop($this->groupStack);
-            $lastGroup['prefix'] = $oldPrefix;
+            $lastGroup['prefix'] = $lastPrefix;
             $this->groupStack[] = $lastGroup;
         };
     }

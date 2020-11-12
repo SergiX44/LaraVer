@@ -32,11 +32,15 @@ trait VersionableResource
 
         $method = "toArrayV{$request->route()->getVersion()}";
 
+        if ($request->route()->getVersion() === 1 && !method_exists($this, $method)) {
+            $method = 'toArray';
+        }
+
         if (!method_exists($this, $method)) {
             throw new VersionedMethodNotFound("Versioned method '{$method}' not found");
         }
 
-        $data = $this->$method();
+        $data = $this->$method($request);
 
         if ($data instanceof Arrayable) {
             $data = $data->toArray();

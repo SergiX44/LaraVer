@@ -20,5 +20,10 @@ class LaraVerServiceProvider extends ServiceProvider
     {
         Route::mixin(new RouteMixin);
         Router::mixin(new RouterMixin);
+
+        $configPath = __DIR__.'/../config/laraver.php';
+
+        $this->publishes([$configPath => config_path('laraver.php')]);
+        $this->mergeConfigFrom($configPath, 'laraver');
     }
 }

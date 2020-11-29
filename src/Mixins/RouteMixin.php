@@ -4,7 +4,7 @@
 namespace SergiX44\LaraVer\Mixins;
 
 use Illuminate\Routing\Route;
-use SergiX44\LaraVer\Support\Helpers;
+use SergiX44\LaraVer\LaraVer;
 
 /**
  * @mixin Route
@@ -13,18 +13,11 @@ class RouteMixin
 {
     const VERSION = 'endpointVersion';
 
-    public function version()
+    public function versioned()
     {
-        return function (?int $version = 1) {
-            if ($this->getVersion() !== null) { // if we are in a versioned group
-                $this->setUri(Helpers::replaceVersion($this->getVersion(), $version, $this->uri));
-            } else { // if there is nothing versioned above us
-                $this->setUri(str_replace($this->getPrefix(), '', $this->uri));
-                $this->prefix("{$this->getPrefix()}/v{$version}");
-            }
-
+        return function () {
             // set a version for the endpoint as default parameter
-            $this->action[RouteMixin::VERSION] = $version;
+            $this->action[RouteMixin::VERSION] = LaraVer::parseVersion($this->uri());
 
             return $this;
         };
@@ -39,6 +32,4 @@ class RouteMixin
             return $this->action[RouteMixin::VERSION] ?? null;
         };
     }
-
-
 }

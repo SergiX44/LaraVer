@@ -37,7 +37,7 @@ trait VersionableResource
         }
 
         if (!method_exists($this, $method)) {
-            throw new VersionedMethodNotFound("Versioned method '{$method}' not found");
+            throw new VersionedMethodNotFound($method);
         }
 
         $data = $this->$method($request);

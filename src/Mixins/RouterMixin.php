@@ -14,6 +14,9 @@ use SergiX44\LaraVer\Support\Helpers;
  */
 class RouterMixin
 {
+    /**
+     * @return \Closure
+     */
     public function groupVersioned()
     {
         return function (array $attributes, $routes) {

@@ -3,7 +3,10 @@
 
 namespace SergiX44\LaraVer;
 
-
+/**
+ * Class LaraVer
+ * @package SergiX44\LaraVer
+ */
 class LaraVer
 {
     /**

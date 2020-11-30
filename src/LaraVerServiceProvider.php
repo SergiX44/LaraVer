@@ -8,6 +8,10 @@ use Illuminate\Support\ServiceProvider;
 use SergiX44\LaraVer\Mixins\RouteMixin;
 use SergiX44\LaraVer\Mixins\RouterMixin;
 
+/**
+ * Class LaraVerServiceProvider
+ * @package SergiX44\LaraVer
+ */
 class LaraVerServiceProvider extends ServiceProvider
 {
     /**

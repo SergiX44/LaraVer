@@ -17,7 +17,9 @@ class RouterMixin
     public function groupVersioned()
     {
         return function (array $attributes, $routes) {
+            // add the attribute on the route stack
             $attributes[RouteMixin::VERSION] = LaraVer::parseVersion($this->getLastGroupPrefix());
+            // than groups everything
             $this->group($attributes, $routes);
         };
     }

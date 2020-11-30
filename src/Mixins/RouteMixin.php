@@ -16,9 +16,8 @@ class RouteMixin
     public function versioned()
     {
         return function () {
-            // set a version for the endpoint as default parameter
+            // set the route action attribute
             $this->action[RouteMixin::VERSION] = LaraVer::parseVersion($this->uri());
-
             return $this;
         };
     }
@@ -30,6 +29,24 @@ class RouteMixin
     {
         return function () {
             return $this->action[RouteMixin::VERSION] ?? null;
+        };
+    }
+
+    /**
+     * @return bool|\Closure
+     */
+    public function isVersioned() {
+        return function () {
+          return $this->getVersion() !== null;
+        };
+    }
+
+    /**
+     * @return bool|\Closure
+     */
+    public function isVersion() {
+        return function (int $version) {
+          return $this->getVersion() === $version;
         };
     }
 }

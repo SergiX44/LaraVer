@@ -30,13 +30,15 @@ trait VersionableResource
     {
         $request = $request ?: Container::getInstance()->make('request');
 
-        $method = "toArrayV{$request->route()->getVersion()}";
+        $prefix = ucfirst(config('laraver.version_prefix', 'v'));
 
-        if ($request->route()->getVersion() === 1 && !method_exists($this, $method)) {
+        $method = "toArray{$prefix}{$request->route()->getVersion()}";
+
+        if (!$request->route()->isVersioned() || $request->route()->isVersion(1)) {
             $method = 'toArray';
         }
 
-        if (!method_exists($this, $method)) {
+        if ($request->route()->isVersioned() && !method_exists($this, $method)) {
             throw new VersionedMethodNotFound($method);
         }
 
